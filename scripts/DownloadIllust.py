@@ -24,7 +24,7 @@ class DownloadIllust:
 
     def download(self):
         # user情報取得
-        df = self.ur.get_user_record()
+        df = self.ur.get_user_record('../info/follow_user_account/user_account.json')
         user_id_list = df['user_id'].values
         
         # イラスト保存先

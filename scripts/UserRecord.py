@@ -20,23 +20,27 @@ class UserRecord:
 
         # ユーザ情報
         self.user_df = pd.DataFrame(columns=['user_id', 'user_name'])
-        self.user_account_path = '../info/follow_user_account/user_account.json'
 
-    def post_user_record(self):
+    def post_user_record(self, path):
         user_id_list = []
         user_name_list = []
 
-        json_result = self.aapi.user_following(self.u_id) # 自分のフォロー欄の情報を取得
+        # 自分のフォロー欄の情報を取得
+        json_result = self.aapi.user_following(self.u_id) 
 
+        # JSONに記録 
         for result in json_result.user_previews:
             user_id_list.append(result.user.id)
             user_name_list.append(result.user.name)
         
         self.user_df['user_id'] = user_id_list
         self.user_df['user_name'] = user_name_list
-        self.user_df.to_json(self.user_account_path)
+        self.user_df.to_json(path)
 
-    def get_user_record(self):
-        df = pd.read_json(self.user_account_path)
-        # print(df)
+    def get_user_record(self, path):
+        df = pd.read_json(path)
         return df
+
+if __name__ == "__main__":
+    ur = UserRecord()
+    ur.post_user_record('../info/follow_user_account/user_account.json')
