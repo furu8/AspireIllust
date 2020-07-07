@@ -3,7 +3,7 @@ import os.path
 import json
 import pandas as pd
 
-class UserRecord:
+class DownloadIllust:
 
     def __init__(self):
         # pixivのアカウント情報を取得
@@ -22,7 +22,7 @@ class UserRecord:
         self.user_df = pd.DataFrame(columns=['user_id', 'user_name'])
         self.user_account_path = '../info/follow_user_account/user_account.json'
 
-    def post_user_record(self):
+    def download(self, ):
         user_id_list = []
         user_name_list = []
 
@@ -35,12 +35,10 @@ class UserRecord:
         self.user_df['user_id'] = user_id_list
         self.user_df['user_name'] = user_name_list
         self.user_df.to_json(self.user_account_path)
+    
+    def extract_user(self):
 
-    def get_user_record(self):
-        df = pd.read_json(self.user_account_path)
-        # print(df)
-        return df
 
 if __name__ == "__main__":
-    ur = UserRecord()
+    ur = DownloadIllust()
     ur.get_user_record()
