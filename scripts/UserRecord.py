@@ -40,7 +40,3 @@ class UserRecord:
     def get_user_record(self, path):
         df = pd.read_json(path)
         return df
-
-if __name__ == "__main__":
-    ur = UserRecord()
-    ur.post_user_record('../info/follow_user_account/user_account.json')

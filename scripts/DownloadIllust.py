@@ -40,7 +40,3 @@ class DownloadIllust:
             # ダウンロード
             for img in img.illusts:
                 self.aapi.download(img.image_urls.large, path=user_path)
-
-if __name__ == "__main__":
-    dli = DownloadIllust()
-    dli.download()

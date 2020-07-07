@@ -1,4 +1,4 @@
 /demo
-/info
+info/*.json
 /data
 /scripts/__pycache__
