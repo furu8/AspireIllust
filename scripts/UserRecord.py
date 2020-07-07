@@ -32,7 +32,7 @@ class UserRecord:
         self.user_df['user_id'] = user_id_list
         self.user_df['user_name'] = user_name_list
 
-        self.user_df.to_csv('../info/follow_user_account/user_account.csv')
+        self.user_df.to_json('../info/follow_user_account/user_account.json')
 
 if __name__ == "__main__":
     ur = UserRecord()
