@@ -17,7 +17,7 @@ class UserRecord:
         # ログイン
         self.aapi = AppPixivAPI()
         self.aapi.login(self.p_id, self.pw)
-        
+
         # ユーザ情報
         self.user_df = pd.DataFrame(columns=['user_id', 'user_name'])
         self.user_account_path = '../info/follow_user_account/user_account.json'
@@ -40,7 +40,3 @@ class UserRecord:
         df = pd.read_json(self.user_account_path)
         # print(df)
         return df
-
-if __name__ == "__main__":
-    ur = UserRecord()
-    ur.get_user_record()
