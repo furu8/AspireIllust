@@ -2,6 +2,7 @@ from pixivpy3 import *
 import os.path
 import json
 import pandas as pd
+from Login import Login
 
 class UserRecord:
 
@@ -14,9 +15,9 @@ class UserRecord:
         self.pw = json_obj['password']
         self.u_id = json_obj['user_id']
 
-        # ログイン
-        self.aapi = AppPixivAPI()
-        self.aapi.login(self.p_id, self.pw)
+        # pixivログイン
+        self.api = Login()
+        self.api.pixiv_login(self.p_id, self.pw)
 
         # ユーザ情報
         self.user_df = pd.DataFrame(columns=['user_id', 'user_name'])
