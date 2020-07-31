@@ -20,4 +20,4 @@ if __name__ == "__main__":
 
     # ユーザのイラストを保存
     dl = DownloadIllust(ur, api)
-    dl.download('../info/follow_user_account/user_account_using.json')
+    dl.pixiv_download('../info/follow_user_account/user_account_using.json')

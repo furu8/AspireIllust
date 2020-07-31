@@ -15,7 +15,7 @@ class DownloadIllust:
         # UserRecord
         self.ur = user_record
 
-    def download(self, path):
+    def pixiv_download(self, path):
         # user情報取得
         df = self.ur.get_user_record(path)
         user_id_list = df['user_id'].values
@@ -25,7 +25,7 @@ class DownloadIllust:
 
         for user_id in user_id_list:
             # ユーザを指定し、JSON取得
-            json_result = self.p_api.users_works(user_id, per_page=300)
+            works_info = self.p_api.users_works(user_id, per_page=300)
 
             # ユーザのディレクトリがなければ作成
             user_path = save_path+str(user_id)
@@ -33,6 +33,12 @@ class DownloadIllust:
                 os.mkdir(user_path)
 
             # ダウンロード
-            for img in json_result.response:
-                self.p_aapi.download(img.image_urls.large, path=user_path)
+            print('start download\n')
+            for work_info in works_info.response:
+                # タイトル出力
+                print(work_info.title.replace("/", "-")) # '/'はPathとして扱われるため回避
+                # 保存
+                self.p_aapi.download(work_info.image_urls.large, path=user_path)
+                # マナー
                 time.sleep(1)
+            print('finish download')
