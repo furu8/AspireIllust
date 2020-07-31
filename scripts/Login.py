@@ -1,7 +1,9 @@
 from pixivpy3 import *
 
 class Login:
+
     def __init__(self):
+        # pixiv_api
         self.pixiv_api = PixivAPI()
         self.pixiv_aapi = AppPixivAPI()
 
