@@ -12,3 +12,6 @@ class Login:
         self.pixiv_api.login(p_id, pw)
         self.pixiv_aapi.login(p_id, pw)
     
+    def get_pixvi_api(self):
+        return self.pixiv_api, self.pixiv_aapi
+    

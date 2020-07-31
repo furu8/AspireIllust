@@ -2,32 +2,21 @@ from pixivpy3 import *
 import os.path
 import json
 import pandas as pd
-from Login import Login
 
 class UserRecord:
 
-    def __init__(self):
-        # pixivのアカウント情報を取得
-        my_account_path = '../info/my_account/my_account.json'
-        json_file = open(my_account_path, 'r')
-        json_obj = json.load(json_file)
-        self.p_id = json_obj['pixiv_id']
-        self.pw = json_obj['password']
-        self.u_id = json_obj['user_id']
-
-        # pixivログイン
-        self.api = Login()
-        self.api.pixiv_login(self.p_id, self.pw)
-
+    def __init__(self, api):
+        # pixiv api
+        self.p_api, self.p_aapi = api.get_pixvi_api()
         # ユーザ情報
         self.user_df = pd.DataFrame(columns=['user_id', 'user_name'])
 
-    def post_user_record(self, path):
+    def post_user_record(self, path, u_id):
         user_id_list = []
         user_name_list = []
 
         # 自分のフォロー欄の情報を取得
-        json_result = self.aapi.user_following(self.u_id) 
+        json_result = self.p_aapi.user_following(u_id) 
 
         # JSONに記録 
         for result in json_result.user_previews:

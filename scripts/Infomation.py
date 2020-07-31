@@ -9,8 +9,8 @@ class Information:
             self.json_obj = json.load(json_file)
     
     def get_my_pixiv_account(self):
-        p_id = json_obj['pixiv_id']
-        pw = json_obj['password']
-        u_id = json_obj['user_id']
+        p_id = self.json_obj['pixiv_id']
+        pw = self.json_obj['password']
+        u_id = self.json_obj['user_id']
     
         return p_id, pw, u_id
