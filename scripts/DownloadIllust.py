@@ -9,11 +9,11 @@ from pixivpy3 import *
 class DownloadIllust:
 
     def __init__(self, user_record, api):
-
         # pixiv api
         self.p_api, self.p_aapi = api.get_pixvi_api()
         # UserRecord
         self.ur = user_record
+        
 
     def pixiv_download(self, path):
         # user情報取得
