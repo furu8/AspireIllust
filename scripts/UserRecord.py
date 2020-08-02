@@ -31,22 +31,22 @@ class UserRecord:
             self.user_id_list.append(result.user.id)
             self.user_name_list.append(result.user.name)
 
-# テスト
-if __name__ == "__main__":
-    from pixivpy3 import *
-    from Infomation import Information
+# # テスト
+# if __name__ == "__main__":
+#     from pixivpy3 import *
+#     from Infomation import Information
 
-    info = Information()
-    p_id, pw, u_id = info.get_my_pixiv_account()
-    p_aapi = AppPixivAPI()
-    p_aapi.login(p_id, pw)
+#     info = Information()
+#     p_id, pw, u_id = info.get_my_pixiv_account()
+#     p_aapi = AppPixivAPI()
+#     p_aapi.login(p_id, pw)
 
-    ur = UserRecord()
-    # test1
-    ur.register_user_record(u_id, p_aapi)
-    # test2
-    path = '../info/follow_user_account/test_user_account.json'
-    ur.post_user_record(path)
-    # test3
-    df = ur.get_user_record(path)
-    print(df)
+#     ur = UserRecord()
+#     # test1
+#     ur.register_user_record(u_id, p_aapi)
+#     # test2
+#     path = '../info/follow_user_account/test_user_account.json'
+#     ur.post_user_record(path)
+#     # test3
+#     df = ur.get_user_record(path)
+#     print(df)
