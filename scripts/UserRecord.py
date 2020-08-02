@@ -1,13 +1,13 @@
-from pixivpy3 import *
 import os.path
 import json
 import pandas as pd
 
 class UserRecord:
 
-    def __init__(self, api):
+    def __init__(self, p_api, p_aapi):
         # pixiv api
-        self.p_api, self.p_aapi = api.get_pixvi_api()
+        self.p_api = p_api
+        self.p_aapi = p_aapi
         # ユーザ情報
         self.user_df = pd.DataFrame(columns=['user_id', 'user_name'])
 
@@ -22,7 +22,7 @@ class UserRecord:
         for result in json_result.user_previews:
             user_id_list.append(result.user.id)
             user_name_list.append(result.user.name)
-        
+        # 保存
         self.user_df['user_id'] = user_id_list
         self.user_df['user_name'] = user_name_list
         self.user_df.to_json(path)

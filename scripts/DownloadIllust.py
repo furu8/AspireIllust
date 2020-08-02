@@ -3,16 +3,15 @@ import json
 import time
 import pandas as pd
 from UserRecord import UserRecord
-from Login import Login
-from pixivpy3 import *
 
 class DownloadIllust:
 
-    def __init__(self, user_record, api):
+    def __init__(self, p_api, p_aapi):
         # pixiv api
-        self.p_api, self.p_aapi = api.get_pixvi_api()
+        self.p_api = p_api
+        self.p_aapi = p_aapi
         # UserRecord
-        self.ur = user_record
+        self.ur = UserRecord()
         
 
     def pixiv_download(self, path):
