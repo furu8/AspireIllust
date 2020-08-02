@@ -22,6 +22,7 @@ if __name__ == "__main__":
     # ur.post_user_record('../info/follow_user_account/user_account.json', u_id) # 新しくフォローしたら作動
 
     # ユーザのイラストを保存
+    using_illust_json_path = '../info/follow_user_account/user_account_using.json'
     dl = DownloadIllust(ur, api)
     dl.pixiv_download(using_illust_json_path)
 

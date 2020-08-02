@@ -16,11 +16,9 @@ class DownloadIllust:
 
     def pixiv_download(self, path):
         # user情報取得
-        df = self.ur.get_user_record(path)
-        user_id_list = df['user_id'].values
-        
+        user_id_list = self.__get_user_id_list(path)
         # イラスト保存先
-        save_path = '../data/pixiv/row/'
+        save_path = '../data/pixiv/row/dl_test/'
 
         for user_id in user_id_list:
             # ユーザを指定し、JSON取得
@@ -28,8 +26,7 @@ class DownloadIllust:
 
             # ユーザのディレクトリがなければ作成
             user_path = save_path+str(user_id)
-            if not os.path.exists(user_path):
-                os.mkdir(user_path)
+            self.__make_directory(user_path)
 
             # ダウンロード
             print('start download\n')
@@ -40,4 +37,33 @@ class DownloadIllust:
                 self.p_aapi.download(work_info.image_urls.large, path=user_path)
                 # マナー
                 time.sleep(1)
-            print('finish download')
+            print('\nfinish download\n')
+
+    # user情報取得
+    def __get_user_id_list(self, path):
+        df = self.ur.get_user_record(path)
+        user_id_list = df['user_id'].values
+        return user_id_list
+    
+    # ディレクトリがなければ作成
+    def __make_directory(self, path):
+        if not os.path.exists(path):
+            os.mkdir(path)
+            print('{}にディレクトリ作成'.format(path))
+
+# テスト
+if __name__ == "__main__":
+    from pixivpy3 import *
+    from Infomation import Information
+
+    info = Information()
+    p_id, pw, u_id = info.get_my_pixiv_account()
+    
+    pixiv_api = PixivAPI()
+    pixiv_aapi = AppPixivAPI()
+    pixiv_api.login(p_id, pw)
+    pixiv_aapi.login(p_id, pw)
+
+    dl = DownloadIllust(pixiv_api, pixiv_aapi)
+    # test1
+    dl.pixiv_download('../info/follow_user_account/test_user_account.json')
