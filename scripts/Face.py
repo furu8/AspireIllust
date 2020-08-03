@@ -18,7 +18,7 @@ class Face:
         self.face_img_list = []
 
     def triming_face(self, save_path):
-        user_id_list = self.__get_user_id_list(self.ill_path)
+        user_id_list = self.__get_user_id_list(self.illustrator_account_path)
 
         # イラストレータごと
         for user_id in user_id_list:

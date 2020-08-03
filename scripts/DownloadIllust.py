@@ -51,19 +51,19 @@ class DownloadIllust:
             os.mkdir(path)
             print('{}にディレクトリ作成'.format(path))
 
-# テスト
-if __name__ == "__main__":
-    from pixivpy3 import *
-    from Infomation import Information
+# # テスト
+# if __name__ == "__main__":
+#     from pixivpy3 import *
+#     from Infomation import Information
 
-    info = Information()
-    p_id, pw, u_id = info.get_my_pixiv_account()
+#     info = Information()
+#     p_id, pw, u_id = info.get_my_pixiv_account()
     
-    pixiv_api = PixivAPI()
-    pixiv_aapi = AppPixivAPI()
-    pixiv_api.login(p_id, pw)
-    pixiv_aapi.login(p_id, pw)
+#     pixiv_api = PixivAPI()
+#     pixiv_aapi = AppPixivAPI()
+#     pixiv_api.login(p_id, pw)
+#     pixiv_aapi.login(p_id, pw)
 
-    dl = DownloadIllust(pixiv_api, pixiv_aapi)
-    # test1
-    dl.pixiv_download('../info/follow_user_account/test_user_account.json')
+#     dl = DownloadIllust(pixiv_api, pixiv_aapi)
+#     # test1
+#     dl.pixiv_download('../info/follow_user_account/test_user_account.json')
