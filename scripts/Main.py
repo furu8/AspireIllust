@@ -1,14 +1,14 @@
 import json
 import pandas as pd
 from Infomation import Information
-from Login import Login
+from API import API
 from UserRecord import UserRecord
 from DownloadIllust import DownloadIllust
 from Face import Face
 
 def main():
     ## pixivのアカウント情報を取得
-    info = Information()
+    info = Information('../info/my_account/my_account.json')
     p_id, pw, u_id = info.get_my_pixiv_account()
 
     ## pixivログイン

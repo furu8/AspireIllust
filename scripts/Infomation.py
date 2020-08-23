@@ -2,9 +2,9 @@ import json
 
 class Information:
 
-    def __init__(self):
+    def __init__(path):
         # pixivのアカウント情報を取得
-        my_account_path = '../info/my_account/my_account.json'
+        my_account_path = path
         with open(my_account_path) as json_file:
             self.json_obj = json.load(json_file)
     

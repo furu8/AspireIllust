@@ -1,6 +1,6 @@
 from pixivpy3 import *
 
-class Login:
+class API:
 
     def __init__(self):
         # pixiv_api
