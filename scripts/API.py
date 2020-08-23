@@ -14,4 +14,3 @@ class API:
     
     def get_pixvi_api(self):
         return self.pixiv_api, self.pixiv_aapi
-    
