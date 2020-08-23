@@ -7,18 +7,18 @@ from UserRecord import UserRecord
 
 class Face:
 
-    def __init__(self, ill_path):
+    def __init__(self):
         # UserRecord
         self.ur = UserRecord()
-        # illustrator path
-        self.illustrator_account_path = ill_path
         # animeface
         self.cascade = cv2.CascadeClassifier('../info/feature_animeface/lbpcascade_animeface.xml')
         # 顔画像リスト
         self.face_img_list = []
 
     def triming_face(self, save_path):
-        user_id_list = self.__get_user_id_list(self.illustrator_account_path)
+        using_illust_path = '../info/follow_user_account/user_account_using.json' # ユーザ情報保存先
+        # user情報取得
+        user_id_list = self.__get_user_id_list(using_illust_path)
 
         # イラストレータごと
         for user_id in user_id_list:
@@ -34,21 +34,24 @@ class Face:
         for illust in illust_list:
             # 保存するファイル名
             save_file_name = illust.split('/')[-1].split('.')[0]
+            print(save_file_name)
             # 顔抽出
             img, face_list = self.__get_face_img(illust)
             
-            if len(face_list) > 0:
-                # キャラごと
-                for i, face in enumerate(face_list):
-                    # x始点、y始点、w幅、h高さ
-                    x, y, w, h = face
-                    # トリミング
-                    face_img = img[y:y+h, x:x+w]
-                    # ユーザのディレクトリがなければ作成
-                    user_path = save_path + str(user_id) + '/'
-                    self.__make_directory(user_path)
-                    # pngで保存
-                    path = user_path + save_file_name + '_' + str(i+1) + '.png'
+            if len(face_list) == 0:
+                continue
+            # キャラごと
+            for i, face in enumerate(face_list):
+                x, y, w, h = face # x始点、y始点、w幅、h高さ
+                face_img = img[y:y+h, x:x+w] # トリミング
+
+                # ユーザのディレクトリがなければ作成
+                user_path = save_path + str(user_id) + '/'
+                self.__make_directory(user_path)
+
+                # pngで保存
+                path = user_path + save_file_name + '_' + str(i+1) + '.png'
+                if not os.path.exists(path): # DL済みの画像かどうか判定
                     cv2.imwrite(path, face_img)
                     print(path + 'をトリミングし保存しました')
                     self.face_img_list.append(face_img)
@@ -76,11 +79,11 @@ class Face:
         face_list = self.cascade.detectMultiScale(gray_img, scaleFactor=1.01, minNeighbors=5, minSize=(24, 24)) # 見逃しを極力少なくパラメータ設定
         return img, face_list
 
-# # テスト
-# if __name__ == "__main__":
-#     face = Face('../info/follow_user_account/user_account_using.json')
-#     # test1
-#     kantoku = 216403
-#     face.triming_face_from_illust('../data/pixiv/interim/face/face_test/', ['../data/pixiv/interim/face/face_test/test_kantoku.jpg'], kantoku)
-#     # test2
-#     print(face.get_face_illust())
+# テスト
+if __name__ == "__main__":
+    face = Face()
+    # test1
+    kantoku = 216403
+    face.triming_face_from_illust('../data/pixiv/interim/face/face_test/', ['../data/pixiv/interim/face/face_test/test_kantoku.jpg'], kantoku)
+    # test2
+    print(face.get_face_illust())
