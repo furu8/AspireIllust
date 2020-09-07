@@ -51,13 +51,19 @@ class Face:
 
                 # pngで保存
                 path = user_path + save_file_name + '_' + str(i+1) + '.png'
-                if not os.path.exists(path): # DL済みの画像かどうか判定
-                    cv2.imwrite(path, face_img)
-                    print(path + 'をトリミングし保存しました')
-                    self.face_img_list.append(face_img)
+                self.__save_illust(path, face_img)
                 
     def get_face_illust(self):
         return self.face_img_list
+    
+    def __save_illust(self, path, face_img):
+        if not os.path.exists(path): # DL済みの画像かどうか判定
+            cv2.imwrite(path, face_img) # 保存
+            print(path + 'をトリミングし保存しました')
+            self.face_img_list.append(face_img)
+
+    def __resize_illust(self):
+        pass
 
     # user情報取得
     def __get_user_id_list(self, path):
@@ -76,14 +82,19 @@ class Face:
         img = cv2.imread(illust, cv2.IMREAD_COLOR) # デフォルトカラー読み込み
         gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) # グレースケール化
         gray_img = cv2.equalizeHist(gray_img) # ヒストグラム平均化（見やすくなる）
-        face_list = self.cascade.detectMultiScale(gray_img, scaleFactor=1.01, minNeighbors=5, minSize=(24, 24)) # 見逃しを極力少なくパラメータ設定
+        # face_list = self.cascade.detectMultiScale(gray_img, scaleFactor=1.01, minNeighbors=5, minSize=(24, 24)) # 見逃しを極力少なくパラメータ設定した場合
+        face_list = self.cascade.detectMultiScale(gray_img, scaleFactor=1.09, minNeighbors=5, minSize=(24, 24)) # 誤検知を極力少なくパラメータ設定した場合
         return img, face_list
 
 # テスト
 if __name__ == "__main__":
     face = Face()
+    
     # test1
-    kantoku = 216403
+    shirabi = 216403
+    kantoku = 1565632
     face.triming_face_from_illust('../data/pixiv/interim/face/face_test/', ['../data/pixiv/interim/face/face_test/test_kantoku.jpg'], kantoku)
+    # face.triming_face_from_illust('../data/pixiv/interim/face/face_test/', ['../data/pixiv/interim/face/face_test/test_shirabi.jpg'], shirabi)
+    
     # test2
     print(face.get_face_illust())
