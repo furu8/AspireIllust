@@ -44,26 +44,29 @@ class Face:
             for i, face in enumerate(face_list):
                 x, y, w, h = face # x始点、y始点、w幅、h高さ
                 face_img = img[y:y+h, x:x+w] # トリミング
-
                 # ユーザのディレクトリがなければ作成
                 user_path = save_path + str(user_id) + '/'
                 self.__make_directory(user_path)
-
                 # pngで保存
                 path = user_path + save_file_name + '_' + str(i+1) + '.png'
-                self.__save_illust(path, face_img)
+                self.__save_face_illust(path, face_img)
                 
     def get_face_illust(self):
         return self.face_img_list
     
-    def __save_illust(self, path, face_img):
+    def __save_face_illust(self, path, face_img):
         if not os.path.exists(path): # DL済みの画像かどうか判定
-            cv2.imwrite(path, face_img) # 保存
+            # リサイズ
+            resize_face_img = self.__resize_face_illust(face_img, 64)
+            # 保存
+            cv2.imwrite(path, resize_face_img) 
             print(path + 'をトリミングし保存しました')
             self.face_img_list.append(face_img)
 
-    def __resize_illust(self):
-        pass
+    def __resize_face_illust(self, face_img, size):
+        width, height = size, size
+        resize_face_img = cv2.resize(face_img, (width, height))
+        return resize_face_img
 
     # user情報取得
     def __get_user_id_list(self, path):
@@ -94,7 +97,7 @@ if __name__ == "__main__":
     shirabi = 216403
     kantoku = 1565632
     face.triming_face_from_illust('../data/pixiv/interim/face/face_test/', ['../data/pixiv/interim/face/face_test/test_kantoku.jpg'], kantoku)
-    # face.triming_face_from_illust('../data/pixiv/interim/face/face_test/', ['../data/pixiv/interim/face/face_test/test_shirabi.jpg'], shirabi)
+    face.triming_face_from_illust('../data/pixiv/interim/face/face_test/', ['../data/pixiv/interim/face/face_test/test_shirabi.jpg'], shirabi)
     
     # test2
-    print(face.get_face_illust())
+    # print(face.get_face_illust())
