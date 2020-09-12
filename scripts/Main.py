@@ -3,7 +3,7 @@ import pandas as pd
 from Infomation import Information
 from API import API
 from UserRecord import UserRecord
-from DownloadIllust import DownloadIllust
+from Illust import Illust
 from Face import Face
 
 def pixiv_my_account_info():
@@ -28,7 +28,7 @@ def pixiv_api(p_id, pw):
 
 def pixiv_download(p_api, p_aapi):
     save_path = '../data/pixiv/row/' # 保存先
-    dl = DownloadIllust(p_api, p_aapi)
+    dl = Illust(p_api, p_aapi)
     dl.pixiv_download(save_path)
 
 def pixiv_triming_illust():

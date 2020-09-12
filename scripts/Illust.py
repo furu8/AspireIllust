@@ -4,7 +4,7 @@ import time
 import pandas as pd
 from UserRecord import UserRecord
 
-class DownloadIllust:
+class Illust:
 
     def __init__(self, p_api, p_aapi):
         # pixiv api
@@ -65,6 +65,6 @@ if __name__ == "__main__":
     pixiv_api.login(p_id, pw)
     pixiv_aapi.login(p_id, pw)
 
-    dl = DownloadIllust(pixiv_api, pixiv_aapi)
+    dl = Illust(pixiv_api, pixiv_aapi)
     # test1
     dl.pixiv_download('../data/pixiv/row/dl_test/')
