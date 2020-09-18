@@ -2,4 +2,5 @@
 info/*/*.json
 /data
 /scripts/__pycache__
+/scripts/models/*ipynb
 .DS_store
