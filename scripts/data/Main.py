@@ -12,7 +12,7 @@ def pixiv_my_account_info(my_account_path):
     return p_id, pw, u_id    
 
 def pixiv_user_account_info(u_id, p_aapi):
-    user_account_path = '../info/follow_user_account/user_account.json' # ユーザのアカウント情報保存先
+    user_account_path = '../info/follow_user_account/pixiv_user_account.json' # ユーザのアカウント情報保存先
     ur = UserRecord()
     ur.register_user_record(u_id, p_aapi) # 登録
     ur.save_user_record(user_account_path) # 保存

@@ -47,7 +47,7 @@ if __name__ == "__main__":
     # test1
     ur.register_user_record(u_id, p_aapi)
     # test2
-    path = '../info/follow_user_account/test_user_account.json'
+    path = '../info/follow_user_account/pixiv_test_user_account.json'
     ur.save_user_record(path)
     # test3
     df = ur.get_user_record(path)

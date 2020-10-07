@@ -24,7 +24,7 @@ class Illust:
         """
         記録してあるイラストレータの画像すべてをダウンロード
         """
-        using_illust_path = '../info/follow_user_account/user_account_using.json' # ユーザ情報保存先
+        using_illust_path = '../info/follow_user_account/pixiv_user_account_using.json' # ユーザ情報保存先
         # user情報取得
         user_id_list = self.__get_user_id_list(using_illust_path)
 
@@ -60,7 +60,7 @@ class Illust:
         """
         記録してあるイラストレータの画像すべてをトリミング
         """
-        using_illust_path = '../info/follow_user_account/user_account_using.json' # ユーザ情報保存先
+        using_illust_path = '../info/follow_user_account/pixiv_user_account_using.json' # ユーザ情報保存先
         # user情報取得
         user_id_list = self.__get_user_id_list(using_illust_path)
 
