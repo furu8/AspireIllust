@@ -36,7 +36,7 @@ if __name__ == "__main__":
     from pixivpy3 import *
     from Infomation import Information
 
-    myaccount_path = '../info/my_account/my_account.json' # 自分のアカウント情報保存先
+    myaccount_path = '../info/my_account/pixiv_my_account.json' # 自分のアカウント情報保存先
     info = Information(myaccount_path)
     p_id, pw, u_id = info.get_my_pixiv_account()
     

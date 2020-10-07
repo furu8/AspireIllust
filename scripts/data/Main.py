@@ -5,8 +5,7 @@ from API import API
 from UserRecord import UserRecord
 from Illust import Illust
 
-def pixiv_my_account_info():
-    my_account_path = '../info/my_account/my_account.json' # 自分のアカウント情報保存先
+def pixiv_my_account_info(my_account_path):
     info = Information(my_account_path)
     p_id, pw, u_id = info.get_my_pixiv_account()
 
@@ -35,7 +34,8 @@ def triming_illusts(ils):
 
 def main():
     # pixivのアカウント情報を取得
-    p_id, pw, u_id = pixiv_my_account_info()
+    my_account_path = '../info/my_account/pixiv_my_account.json' # 自分のアカウント情報保存先
+    p_id, pw, u_id = pixiv_my_account_info(my_account_path)
 
     # pixiv api
     p_api, p_aapi = pixiv_api(p_id, pw)
