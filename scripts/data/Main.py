@@ -5,11 +5,19 @@ from API import API
 from UserRecord import UserRecord
 from Illust import Illust
 
-def pixiv_my_account_info(my_account_path):
-    info = Information(my_account_path)
-    p_id, pw, u_id = info.get_my_pixiv_account()
+def get_my_pixiv_account_info():
+    pixiv_my_account_path = '../../info/my_account/pixiv_my_account.json' # 自分のアカウント情報保存先
+    pixiv_info = Information(pixiv_my_account_path)
+    P_ID, PW, U_ID = pixiv_info.get_pixiv_info()
 
-    return p_id, pw, u_id    
+    return P_ID, PW, U_ID
+
+def get_my_twitter_account_info():
+    twitter_my_account_path = '../../info/my_account/twitter_my_account.json' # 自分のアカウント情報保存先
+    twitter_info = Information(twitter_my_account_path)
+    CONSUMER_KEY, CONSUMER_SECRET_KEY, ACCESS_TOKEN, ACCESS_TOKEN_SECRET = twitter_info.get_twitter_info()
+
+    return CONSUMER_KEY, CONSUMER_SECRET_KEY, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
 
 def pixiv_user_account_info(u_id, p_aapi):
     user_account_path = '../info/follow_user_account/pixiv_user_account.json' # ユーザのアカウント情報保存先
@@ -34,21 +42,23 @@ def triming_illusts(ils):
 
 def main():
     # pixivのアカウント情報を取得
-    my_account_path = '../info/my_account/pixiv_my_account.json' # 自分のアカウント情報保存先
-    p_id, pw, u_id = pixiv_my_account_info(my_account_path)
+    P_ID, PW, U_ID = get_my_pixiv_account_info()
 
-    # pixiv api
-    p_api, p_aapi = pixiv_api(p_id, pw)
-
-    # ユーザ情報を登録・保存
-    pixiv_user_account_info(u_id, p_aapi)
+    # twitterのアカウント情報を取得
+    CONSUMER_KEY, CONSUMER_SECRET_KEY, ACCESS_TOKEN, ACCESS_TOKEN_SECRET = get_my_twitter_account_info()
     
-    # pixivイラストを保存
-    ils = Illust(p_api, p_aapi) 
-    pixiv_download(ils)
+    # # pixiv api
+    # p_api, p_aapi = pixiv_api(p_id, pw)
 
-    # イラストの顔を抽出
-    triming_illusts(ils) 
+    # # ユーザ情報を登録・保存
+    # pixiv_user_account_info(u_id, p_aapi)
+    
+    # # pixivイラストを保存
+    # ils = Illust(p_api, p_aapi) 
+    # pixiv_download(ils)
+
+    # # イラストの顔を抽出
+    # triming_illusts(ils) 
     
 
 if __name__ == "__main__":
