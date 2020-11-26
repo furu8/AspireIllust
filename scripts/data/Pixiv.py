@@ -1,4 +1,5 @@
 from pixivpy3 import *
+import pandas as pd
 
 class Pixiv:
 
@@ -11,13 +12,16 @@ class Pixiv:
         # pixiv_api
         self.pixiv_api = PixivAPI()
         self.pixiv_aapi = AppPixivAPI()
-
+        
         # ログイン
         self.pixiv_api.login(self.P_ID, self.PW)
         self.pixiv_aapi.login(self.P_ID, self.PW)
 
-        #UserRecordの保存先
-        self.user_record_path = '../../info/my_account/pixiv_my_account.json'
+        # UserRecordの保存先
+        self.user_record_path = '../../info/follow_user_account/pixiv_user_account.json'
+
+        # ユーザのアカウント情報データフレーム
+        self.user_df = pd.DataFrame(columns=['user_id', 'user_name'])
 
     # ユーザ情報取得
     def get_user_record(self):
@@ -30,10 +34,10 @@ class Pixiv:
         follow_json = self.pixiv_aapi.user_following(self.U_ID) 
         
         # JSONデータをリストに記録 
-        user_id_list, user_name_list = self.__add_id_name(follow_json):
+        user_id_list, user_name_list = self.__add_id_name(follow_json)
 
         # 保存
-        self.__save_user(self, user_id_list, user_name_list):
+        self.__save_user(user_id_list, user_name_list)
 
     def __add_id_name(self, follow_json):
         user_id_list = []
@@ -48,8 +52,15 @@ class Pixiv:
     def __save_user(self, user_id_list, user_name_list):
         self.user_df['user_id'] = user_id_list
         self.user_df['user_name'] = user_name_list
-        self.user_df.to_json(path)
+        self.user_df.to_json(self.user_record_path)
 
         print(self.user_record_path + 'に保存しました')
 
 
+if __name__ == "__main__":
+    from Infomation import Information
+    info = Information()
+    pixiv_json = info.get_pixiv_json()
+    pixiv = Pixiv(pixiv_json)
+    # pixiv.register_user_record()
+    print(pixiv.get_user_record())
