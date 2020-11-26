@@ -47,18 +47,18 @@ def main():
     # twitterのアカウント情報を取得
     CONSUMER_KEY, CONSUMER_SECRET_KEY, ACCESS_TOKEN, ACCESS_TOKEN_SECRET = get_my_twitter_account_info()
     
-    # # pixiv api
-    # p_api, p_aapi = pixiv_api(p_id, pw)
+    # pixiv api
+    p_api, p_aapi = pixiv_api(P_ID, PW)
 
-    # # ユーザ情報を登録・保存
-    # pixiv_user_account_info(u_id, p_aapi)
+    # ユーザ情報を登録・保存
+    pixiv_user_account_info(u_id, p_aapi)
     
-    # # pixivイラストを保存
-    # ils = Illust(p_api, p_aapi) 
-    # pixiv_download(ils)
+    # pixivイラストを保存
+    ils = Illust(p_api, p_aapi) 
+    pixiv_download(ils)
 
-    # # イラストの顔を抽出
-    # triming_illusts(ils) 
+    # イラストの顔を抽出
+    triming_illusts(ils) 
     
 
 if __name__ == "__main__":
