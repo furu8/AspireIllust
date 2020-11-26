@@ -1,5 +1,6 @@
 from pixivpy3 import *
 import pandas as pd
+import os, time
 
 class Pixiv:
 
@@ -24,8 +25,11 @@ class Pixiv:
         self.user_df = pd.DataFrame(columns=['user_id', 'user_name'])
 
     # ユーザ情報取得
-    def get_user_record(self):
-        df = pd.read_json(self.user_record_path)
+    def get_user_record(self, path):
+        """
+        引数pathにはuser_account.jsonとuser_account_using.jsonを指定
+        """
+        df = pd.read_json(path)
         return df
 
     # 自分のフォロー欄の情報を記録
@@ -56,6 +60,47 @@ class Pixiv:
 
         print(self.user_record_path + 'に保存しました')
 
+    def download_illustrator_illusts(self):
+        """
+        記録してあるイラストレータの画像すべてをダウンロード
+        """
+        # ユーザ情報取得
+        using_illust_path = '../../info/follow_user_account/pixiv_user_account_using.json' 
+        user_df = self.get_user_record(using_illust_path)
+        
+        for user_id in user_df['user_id'].values:
+            self.download_illusts(user_id)
+
+    def download_illusts(self, user_id):
+        """
+        引数のIDのイラストレータの画像をすべてダウンロード
+        """
+        # ユーザを指定し、JSON取得
+        works_info = self.pixiv_api.users_works(user_id, per_page=300)
+
+        # ユーザのディレクトリがなければ作成
+        save_path = '../../data/pixiv/row/' + str(user_id) + '/'
+        self.__make_directory(save_path)
+
+        # ダウンロード
+        print('start download\n')
+        for work_info in works_info.response:
+            # DL済みの画像かどうか判定
+            if not os.path.exists(save_path + work_info.image_urls.large.split('/')[-1]):
+                # タイトル出力
+                print(work_info.title.replace("/", "-")) # '/'はPathとして扱われるため回避
+                # 保存
+                self.pixiv_aapi.download(work_info.image_urls.large, path=save_path)
+                # マナー
+                time.sleep(1)
+        print('\nfinish download\n')
+    
+    # ディレクトリがなければ作成
+    def __make_directory(self, path):
+        if not os.path.exists(path):
+            os.mkdir(path)
+            print('{}にディレクトリ作成'.format(path))
+
 
 if __name__ == "__main__":
     from Infomation import Information
@@ -63,4 +108,7 @@ if __name__ == "__main__":
     pixiv_json = info.get_pixiv_json()
     pixiv = Pixiv(pixiv_json)
     # pixiv.register_user_record()
-    print(pixiv.get_user_record())
+    # print(pixiv.get_user_record())
+    pixiv.download_illustrator_illusts()
+
+
