@@ -88,4 +88,5 @@ if __name__ == "__main__":
     # plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     # plt.show()
 
+    # トリミング実行
     triming_illlustrator_face_illusts()
