@@ -95,8 +95,8 @@ class Pixiv:
         # # UserRecordの保存先
         # self.user_record_path = '../../info/follow_user_account/pixiv_user_account.json'
         if not save_path is None:
-            self.user_df.to_json(self.user_record_path)
-            print(self.user_record_path + 'に保存しました')
+            self.user_df.to_json(save_path)
+            print(save_path + 'に保存しました')
             
 
     def __add_id_name(self, follow_json):
