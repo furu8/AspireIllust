@@ -1,5 +1,9 @@
 import tweepy
 import pandas as pd
+import urllib.error
+import urllib.request
+import os
+import time
 
 class Twitter:
 
@@ -34,54 +38,50 @@ class Twitter:
 
         # ユーザごとにダウンロード実行
         for user_id in self.user_df['user_id'].values:
-            # ユーザを指定し、JSON取得
-            res = tweepy.Cursor(self.api.user_timeline, user_id=user_id).items(5)
-            url_list = self.search_illust(res)
-            self.download_illusts(url_list)
-                  
-                  
-    def search_illust(res):
-        url_list = []
+            # ユーザのディレクトリがなければ作成
+            save_path = '../../data/twitter/row/' + str(user_id) + '/'
+            self.__make_directory(save_path)
 
-        tweet_list = res['statuses']
+            # ユーザを指定し、JSON取得
+            res = tweepy.Cursor(self.api.user_timeline, user_id=user_id, tweet_mode='extended', include_entities=True).items()
+            url_list = self.search_illust(res)
+            self.download_illusts(url_list, save_path)
+                  
+
+    def search_illust(self, tweet_list):
+        url_list = []
         for tweet in tweet_list:
-            if 'extended_entities' in tweet:
-                for media in tweet['extended_entities']['media']:
+            if 'extended_entities' in tweet._json:
+                for media in tweet._json['extended_entities']['media']:
                     media_type = media['type']
                     url = media['media_url']
                     if media_type == 'photo':
                         url_list.append(url)
+
         return url_list
 
 
-    def download_illusts(self, user_id):
+    def download_illusts(self, url_list, save_path):
         """
-        引数のIDのイラストレータの画像をすべてダウンロード
+        引数のurl_listの画像をすべてダウンロード
         """
-        
-
-        # ユーザのディレクトリがなければ作成
-        save_path = '../../data/twitter/row/' + str(user_id) + '/'
-        self.__make_directory(save_path)
-
-        # ダウンロード
         print('start download\n')
-        for work_info in works_info:
-            if 'extended_entities' in work_info:
-            for media in work_info['extended_entities']['media']:
-                media_type = media['type']
-                url = media['media_url']
-                if media_type == 'photo':
-                    url_list.append(url)
-            
+        for url in url_list:
+            dl_path = save_path + os.path.basename(url)
             # DL済みの画像かどうか判定
-            # if not os.path.exists(save_path + work_info.image_urls.large.split('/')[-1]):
-                # タイトル出力
-                # print(work_info.title.replace("/", "-")) # '/'はPathとして扱われるため回避
-                # 保存
-                # self.pixiv_aapi.download(work_info.image_urls.large, path=save_path)
+            if not os.path.exists(dl_path):
+                try:
+                    urllib.request.urlretrieve(url, dl_path)
+                    # with urllib.request.urlopen(url) as web:
+                    #     # ダウンロード
+                    #     with open(save_path, mode='wb') as f:
+                    #         f.write(web.read())
+                except urllib.error.URLError as e:
+                    print(e)
+                # url出力
+                print(url)
                 # マナー
-                # time.sleep(1)
+                time.sleep(1)
         print('\nfinish download\n')
     
 
@@ -140,5 +140,5 @@ if __name__ == "__main__":
     # twitter.register_user_record('../../info/follow_user_account/twitter_user_account.json')
     # twitter.register_user_record()
     # print(twitter.user_df)
-    twitter.download_illusts(159060598)
+    twitter.download_illustrator_illusts(load_path='../../info/follow_user_account/twitter_user_account_using.json')
         
