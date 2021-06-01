@@ -47,7 +47,7 @@ class Pixiv:
         works_info = self.pixiv_api.users_works(user_id, per_page=300)
 
         # ユーザのディレクトリがなければ作成
-        save_path = '../../data/pixiv/row/' + str(user_id) + '/'
+        save_path = '../../data/pixiv/raw/' + str(user_id) + '/'
         self.__make_directory(save_path)
 
         # ダウンロード

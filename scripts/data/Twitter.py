@@ -39,7 +39,7 @@ class Twitter:
         # ユーザごとにダウンロード実行
         for user_id in self.user_df['user_id'].values:
             # ユーザのディレクトリがなければ作成
-            save_path = '../../data/twitter/row/' + str(user_id) + '/'
+            save_path = '../../data/twitter/raw/' + str(user_id) + '/'
             self.__make_directory(save_path)
 
             # ユーザを指定し、JSON取得

@@ -33,7 +33,7 @@ def pixiv_api(p_id, pw):
     return p_api, p_aapi
 
 def pixiv_download(ils):
-    save_path = '../data/pixiv/row/' # 保存先
+    save_path = '../data/pixiv/raw/' # 保存先
     ils.pixiv_download_illustrators(save_path)
 
 def triming_illusts(ils):

@@ -15,7 +15,7 @@ def triming_illlustrator_face_illusts():
     # イラストレータごと
     for user_id in user_df['user_id'].values:
         # イラストレータごとのパスを指定
-        illustrator_path = '../../data/pixiv/row/' + str(user_id) + '/*'
+        illustrator_path = '../../data/pixiv/raw/' + str(user_id) + '/*'
         # イラストのリスト
         illust_list = gb.glob(illustrator_path)
         # イラストごとにトリミング
@@ -83,7 +83,7 @@ def get_face_img(illust):
 
 if __name__ == "__main__":
     # import matplotlib.pyplot as plt
-    # illust = '../../data/pixiv/row/216403/83914155_p0.jpg'
+    # illust = '../../data/pixiv/raw/216403/83914155_p0.jpg'
     # img, face_list = get_face_img(illust)
     # plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     # plt.show()
